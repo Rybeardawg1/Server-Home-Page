@@ -4,142 +4,183 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-(function($) {
+window.onload = function () {
+	// Hide the loading screen
+	document.getElementById('loading-screen').style.display = 'none';
 
-	var	$window = $(window),
+	// Allow scrolling once the page is loaded
+	document.body.style.overflow = 'auto';
+};
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	const gif = document.querySelector('.floating-gif img');
+
+	function randomizeMotion() {
+		const randomX = Math.random() * (window.innerWidth - gif.clientWidth);
+		const randomY = Math.random() * (window.innerHeight - gif.clientHeight);
+		const randomRotation = Math.random() * 360;
+
+		// Use transition for smooth movement
+		gif.style.transition = 'transform 5s linear';  // Smoothly transition over 5 seconds
+		gif.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRotation}deg)`;
+	}
+
+	setInterval(randomizeMotion, 5000); // Update every 5 seconds to match the transition time
+});
+
+(function ($) {
+
+	var $window = $(window),
 		$body = $('body'),
 		$header = $('#header'),
-		$banner = $('#banner');
+		$banner = $('#banner'),
+		$header_retro = $('#header_retro');
+
 
 	// Breakpoints.
-		breakpoints({
-			xlarge:	'(max-width: 1680px)',
-			large:	'(max-width: 1280px)',
-			medium:	'(max-width: 980px)',
-			small:	'(max-width: 736px)',
-			xsmall:	'(max-width: 480px)'
-		});
+	breakpoints({
+		xlarge: '(max-width: 1680px)',
+		large: '(max-width: 1280px)',
+		medium: '(max-width: 980px)',
+		small: '(max-width: 736px)',
+		xsmall: '(max-width: 480px)'
+	});
 
 	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+	$window.on('load', function () {
+		window.setTimeout(function () {
+			$body.removeClass('is-preload');
+		}, 100);
+	});
+	
 
 	// Header.
-		if ($banner.length > 0
-		&&	$header.hasClass('alt')) {
+	if ($banner.length > 0
+		&& $header.hasClass('alt')) {
 
-			$window.on('resize', function() { $window.trigger('scroll'); });
+		$window.on('resize', function () { $window.trigger('scroll'); });
 
-			$banner.scrollex({
-				bottom:		$header.outerHeight(),
-				terminate:	function() { $header.removeClass('alt'); },
-				enter:		function() { $header.addClass('alt'); },
-				leave:		function() { $header.removeClass('alt'); }
-			});
+		$banner.scrollex({
+			bottom: $header.outerHeight(),
+			terminate: function () { $header.removeClass('alt'); },
+			enter: function () { $header.addClass('alt'); },
+			leave: function () { $header.removeClass('alt'); }
+		});
 
+	}
+
+	$window.on('scroll', function () {
+		// Calculate the scroll position relative to the target div
+		var divTop = $header_retro.offset().top - 50;  // Top position of the target div
+		var scrollTop = $window.scrollTop();   // Current scroll position of the window
+	
+		if (scrollTop > divTop) {
+		  $header.fadeOut(); // Hide the header when scrolled past the target div
+		} else {
+		  $header.fadeIn();  // Show the header when above the target div
 		}
+	  });
 
 	// Menu.
-		var $menu = $('#menu');
+	var $menu = $('#menu');
 
-		$menu._locked = false;
+	$menu._locked = false;
 
-		$menu._lock = function() {
+	$menu._lock = function () {
 
-			if ($menu._locked)
-				return false;
+		if ($menu._locked)
+			return false;
 
-			$menu._locked = true;
+		$menu._locked = true;
 
-			window.setTimeout(function() {
-				$menu._locked = false;
+		window.setTimeout(function () {
+			$menu._locked = false;
+		}, 350);
+
+		return true;
+
+	};
+
+	$menu._show = function () {
+
+		if ($menu._lock())
+			$body.addClass('is-menu-visible');
+
+	};
+
+	$menu._hide = function () {
+
+		if ($menu._lock())
+			$body.removeClass('is-menu-visible');
+
+	};
+
+	$menu._toggle = function () {
+
+		if ($menu._lock())
+			$body.toggleClass('is-menu-visible');
+
+	};
+
+	$menu
+		.appendTo($body)
+		.on('click', function (event) {
+
+			event.stopPropagation();
+
+			// Hide.
+			$menu._hide();
+
+		})
+		.find('.inner')
+		.on('click', '.close', function (event) {
+
+			event.preventDefault();
+			event.stopPropagation();
+			event.stopImmediatePropagation();
+
+			// Hide.
+			$menu._hide();
+
+		})
+		.on('click', function (event) {
+			event.stopPropagation();
+		})
+		.on('click', 'a', function (event) {
+
+			var href = $(this).attr('href');
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			// Hide.
+			$menu._hide();
+
+			// Redirect.
+			window.setTimeout(function () {
+				window.location.href = href;
 			}, 350);
 
-			return true;
+		});
 
-		};
+	$body
+		.on('click', 'a[href="#menu"]', function (event) {
 
-		$menu._show = function() {
+			event.stopPropagation();
+			event.preventDefault();
 
-			if ($menu._lock())
-				$body.addClass('is-menu-visible');
+			// Toggle.
+			$menu._toggle();
 
-		};
+		})
+		.on('keydown', function (event) {
 
-		$menu._hide = function() {
+			// Hide on escape.
+			if (event.keyCode == 27)
+				$menu._hide();
 
-			if ($menu._lock())
-				$body.removeClass('is-menu-visible');
-
-		};
-
-		$menu._toggle = function() {
-
-			if ($menu._lock())
-				$body.toggleClass('is-menu-visible');
-
-		};
-
-		$menu
-			.appendTo($body)
-			.on('click', function(event) {
-
-				event.stopPropagation();
-
-				// Hide.
-					$menu._hide();
-
-			})
-			.find('.inner')
-				.on('click', '.close', function(event) {
-
-					event.preventDefault();
-					event.stopPropagation();
-					event.stopImmediatePropagation();
-
-					// Hide.
-						$menu._hide();
-
-				})
-				.on('click', function(event) {
-					event.stopPropagation();
-				})
-				.on('click', 'a', function(event) {
-
-					var href = $(this).attr('href');
-
-					event.preventDefault();
-					event.stopPropagation();
-
-					// Hide.
-						$menu._hide();
-
-					// Redirect.
-						window.setTimeout(function() {
-							window.location.href = href;
-						}, 350);
-
-				});
-
-		$body
-			.on('click', 'a[href="#menu"]', function(event) {
-
-				event.stopPropagation();
-				event.preventDefault();
-
-				// Toggle.
-					$menu._toggle();
-
-			})
-			.on('keydown', function(event) {
-
-				// Hide on escape.
-					if (event.keyCode == 27)
-						$menu._hide();
-
-			});
+		});
 
 })(jQuery);

@@ -4266,6 +4266,7 @@ body.is-preload #banner p {
 	font-family: 'Minecraft';
 	font-size: xxx-large;
 	height: max-content;
+  width: 100%;
 }
 
 .penguin {
@@ -4275,4 +4276,72 @@ body.is-preload #banner p {
 	background-repeat: repeat;
 	
 	width: 100%;
+}
+
+.kirby-scroll {
+  height: 10vh;
+  overflow: hidden; 
+  background-image: url('../../images/Kirby_sleeping.webp'); 
+  background-repeat: repeat-x;
+  background-size: auto 100%; 
+  width: 100%;
+  animation: scrollBackground 30s linear infinite;
+  
+} 
+
+@keyframes scrollBackground {
+  from {
+      background-position: 0 0; /* Start position */
+  }
+  to {
+      background-position: -100% 0; /* End position */
+  }
+}
+
+
+/* Loading screen overlay */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  z-index: 1000; /* Keeps loading screen on top */
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey border */
+  border-top: 8px solid #3498db; /* Blue border for the top */
+  border-radius: 50%; /* Makes the element round */
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite; /* Applies the spinning animation */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.floating-gif {
+  position: absolute;
+  left: 50%;
+  animation: float 60s infinite linear, rotate 20s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(200vw, 0); }
+  50% { transform: translate(-200vw, 200vh); }
+  75% { transform: translate(0, 200vh); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

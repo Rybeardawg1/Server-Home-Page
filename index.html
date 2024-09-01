@@ -19,13 +19,19 @@
     <link rel="icon" type="image/x-icon" href="/images/logo.jpg" />
   </head>
   <body class="is-preload">
+    <div id="loading-screen">
+      <!-- <div class="loader"></div> -->
+      <p style="color: black">
+        Give it a second, my 10 yr old cpu is kickin into overdrive to load gifs
+        into ur cache lol...
+      </p>
+    </div>
     <!-- Page Wrapper -->
     <div id="page-wrapper">
       <!-- Header -->
       <header id="header" class="alt">
         <h1>Supa Hot Fiya</h1>
       </header>
-
       <section id="banner">
         <div class="inner">
           <img
@@ -126,18 +132,64 @@
                 <!-- <a href="#" class="special">Learn more</a> -->
               </article>
             </section>
-            <h2 class="major">Now for fun stuff</h2>
           </div>
         </section>
       </section>
     </div>
-    <div class="background_stars" style="flex: content;">
-      <div class="header_retro">Supa Hot Fiya</div>
-      <img
-        src="/images/better-call-saul-loop.gif"
-        style="z-index: -10; width: 20%"
-        alt=""
-      />
+    <div
+      class="background_stars"
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+      "
+    >
+      <!-- Other Content -->
+      <div class="header_retro" id="header_retro">Supa Hot Fiya</div>
+      <p style="display: flex; justify-content: center; margin-bottom: -1%">
+        Sit down, relax, stay a while
+      </p>
+      <!-- KIRBY -->
+      <div class="kirby-scroll"></div>
+      <!-- SAUL -->
+      <div class="floating-gif">
+        <img
+          src="/images/better-call-saul-loop.gif"
+          style="opacity: 80%; z-index: -10; width: 30%"
+          alt=""
+        />
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 10px;
+          width: 100%;
+        "
+      >
+        <!-- MILES -->
+        <div
+          style="
+            font-size: large;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          "
+        >
+          Favorite non-anime animated movie:
+          <img src="images/Miles.jpg" style="max-width: 25%" alt="" />
+        </div>
+        <iframe
+          src="2048.html"
+          style="flex: 1; height: 45vh; min-width: 25%"
+          frameborder="0"
+        ></iframe>
+      </div>
+
+      <!-- Additional Content -->
       <img
         src="images/car-sheerer.gif"
         style="left: 10; max-width: 10%"
@@ -172,10 +224,8 @@
       />
       <img src="images/DogDance.gif" style="max-width: 10%" alt="" />
       <img src="images/monkey-conduciendo.gif" style="max-width: 10%" alt="" />
-      <img src="images/Miles.jpg" style="max-width: 10%" alt="" />
-      <img src="images/Kirby_sleeping.webp" style="max-width: 10%" alt="" />
-      <iframe src="2048.html" style="min-width: 25%" frameborder="0"></iframe>
     </div>
+
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.scrollex.min.js"></script>
